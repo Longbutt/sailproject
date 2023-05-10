@@ -69,7 +69,7 @@ import streamlit.components.v1 as components
 # ...
 
 config = {
-    'user': st.secrets["user"]["name"]',
+    'user': st.secrets["user"]["name"],
     'password': st.secrets["user"]["password"],
     'host': st.secrets["user"]["host"],
     'database': st.secrets["user"]["bac"],
