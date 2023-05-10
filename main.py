@@ -40,7 +40,7 @@ import streamlit.components.v1 as components
 
 # # Replace these values with your own
 # client_id = 'f4aaf264-83b7-481a-8c05-7865a2edfe1a'
-# client_secret = 'sts8Q~373SYf12RhoLo9TyDRCcSFsIC-0kaoPbyR'
+
 # tenant_id = '39da5ba9-aeb3-4a9d-8bfe-9f1e2da64000'
 #
 # credential = ClientSecretCredential(tenant_id, client_id, client_secret)
@@ -68,9 +68,15 @@ import streamlit.components.v1 as components
 # Run your Python script here
 # ...
 
-config = {}
+config = {
+    'user': st.secrets["user"]["name"]',
+    'password': st.secrets["user"]["password"],
+    'host': st.secrets["user"]["host"],
+    'database': st.secrets["user"]["bac"],
+    'ssl_ca': 'BaltimoreCyberTrustRoot.crt.pem'
+}
 
-connection_string = ()
+connection_string = (st.secrets["connection_string"]["string"])
 
 
 def ChangeWidgetFontSize(wgt_txt, wch_font_size='12px'):
