@@ -76,7 +76,6 @@ config = {
     'ssl_ca': 'BaltimoreCyberTrustRoot.crt.pem'
 }
 
-print(config)
 
 connection_string = (st.secrets["connection_string"]["string"])
 
