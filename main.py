@@ -97,7 +97,7 @@ if "widget_key" not in st.session_state.state:
     st.session_state.state["widget_key"] = str(randint(1000, 100000000))
 
 # Header in App
-st.title('Performance Presentation and Analysis Tool')
+st.title('Performance Visualization and Analysis Program')
 
 # Text in app
 st.text('Visualize and analyse sailing sessions')
@@ -595,14 +595,14 @@ if options == 'Analysis':
 
 elif options == 'Home':
     # Load an image from a file path
-    image = 'logo_1972.png'
+    image = 'PVAP.png'
 
     # Display the image in the Streamlit app
     st.image(image, use_column_width=True)
 
-    st.write('Contact: johan.langballe@outlook.com or ???')
+    st.write('Contact: johan.langballe@outlook.com or nikolaj.hougaard1999@gmail.com')
 
-    ChangeWidgetFontSize('Contact: johan.langballe@outlook.com or ???', '12px')
+    ChangeWidgetFontSize('Contact: johan.langballe@outlook.com or nikolaj.hougaard1999@gmail.com', '12px')
 
 elif options == 'Upload':
     st.header("Upload Files")
