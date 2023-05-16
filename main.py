@@ -763,7 +763,7 @@ elif options == 'Upload':
 
         run_overview, SM = SM_handling.make_RO_and_Prep_SM(SM, Session_id)
 
-        st.write(run_overview)
+        # st.write(run_overview)
 
         st.header('Session ID: ' + str(Session_id))
 
