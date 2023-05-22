@@ -68,8 +68,9 @@ def segment_file(SM_RAWfile, SM_Sorted=0):
             start = i * windowlength
             end = windowlength * i + windowlength
             Temp = SM.iloc[start:end]
-
-            Heading_std = Temp['HDT - Heading True'].std()
+            
+            Yaw_std = Temp['Yaw'].std()
+            Yaw_avg = Temp['Yaw'].mean()
             SOG_avg = Temp['SOG - Speed over Ground'].mean()
             SOG_std = Temp['SOG - Speed over Ground'].std()
             COG_std = Temp['COG - Course over Ground'].std()
@@ -81,10 +82,10 @@ def segment_file(SM_RAWfile, SM_Sorted=0):
             reg = LinearRegression().fit(xcoor[start:end], ycoor[start:end])
             r2 = reg.score(xcoor[start:end], ycoor[start:end])
 
-            X.append([r2, Heading_std, SOG_avg, SOG_std, COG_std, Heel_avg, Heel_std, Trim_avg, Trim_std, start, end])
+            X.append([r2, Yaw_std, Yaw_avg, SOG_avg, SOG_std, COG_std, Heel_avg, Heel_std, Trim_avg, Trim_std, start, end])
             y.append([df.Eval.iloc[i]])
 
-        X = pd.DataFrame(X, columns=['r2', 'Heading_std', 'SOG_avg', 'SOG_std', 'COG_std',
+        X = pd.DataFrame(X, columns=['r2', 'Yaw_std', 'Yaw_avg', 'SOG_avg', 'SOG_std', 'COG_std',
                                      'Heel_avg', 'Heel_std', 'Trim_avg', 'Trim_std', 'StartID', 'StopID'])
         y = pd.DataFrame(y, columns=['Eval'])
         SM_seg = pd.concat([X, y], axis=1)
@@ -105,7 +106,8 @@ def segment_file(SM_RAWfile, SM_Sorted=0):
             end = windowlength * i + windowlength
             Temp = SM.iloc[start:end]
 
-            Heading_std = Temp['HDT - Heading True'].std()
+            Yaw_std = Temp['Yaw'].std()
+            Yaw_avg = Temp['Yaw'].mean()
             SOG_avg = Temp['SOG - Speed over Ground'].mean()
             SOG_std = Temp['SOG - Speed over Ground'].std()
             COG_std = Temp['COG - Course over Ground'].std()
@@ -117,9 +119,9 @@ def segment_file(SM_RAWfile, SM_Sorted=0):
             reg = LinearRegression().fit(xcoor[start:end], ycoor[start:end])
             r2 = reg.score(xcoor[start:end], ycoor[start:end])
 
-            X.append([r2, Heading_std, SOG_avg, SOG_std, COG_std, Heel_avg, Heel_std, Trim_avg, Trim_std, start, end])
+            X.append([r2, Yaw_std, Yaw_avg, SOG_avg, SOG_std, COG_std, Heel_avg, Heel_std, Trim_avg, Trim_std, start, end])
 
-        SM_seg = pd.DataFrame(X, columns=['r2', 'Heading_std', 'SOG_avg', 'SOG_std', 'COG_std',
+        SM_seg = pd.DataFrame(X, columns=['r2', 'Yaw_std', 'Yaw_avg', 'SOG_avg', 'SOG_std', 'COG_std',
                                           'Heel_avg', 'Heel_std', 'Trim_avg', 'Trim_std', 'StartID', 'StopID'])
         return SM_seg
 
@@ -278,6 +280,16 @@ def SM_WIND_pair(SM_Rawfile, WIND_Rawfile):
     df = df.dropna(axis=1, how='all')
     df = df.reset_index(drop=True)
     df = df.dropna()
+    
+    def calculate_yaw(row):
+        cog = row['COG - Course over Ground']
+        heading = row['HDT - Heading True']
+        yaw = cog - heading
+        if yaw > 180:
+            yaw -= 360
+        elif yaw < -180:
+            yaw += 360
+        return yaw
 
     def calculate_true_wind(AWS, AWA, SOG, COG):
         # Convert AWA to 0-180
@@ -352,7 +364,7 @@ def SM_WIND_pair(SM_Rawfile, WIND_Rawfile):
         axis=1,
         result_type='expand'
     )
-
+    
     # Add columns to wind dataframe
     df_apl.columns = ['TWS', 'TWA']
     df = pd.concat([df, df_apl], axis=1)
@@ -396,6 +408,10 @@ def SM_WIND_pair(SM_Rawfile, WIND_Rawfile):
     SM_apl.columns = ['vmg', 'TWA']
     SM = pd.concat([SM, SM_apl], axis=1)
     SM['vmg'] = abs(SM['vmg'])
+    
+    # Apply yaw function
+    SM['Yaw'] = SM.apply(calculate_yaw, axis=1)
+    
     return SM
 
 
