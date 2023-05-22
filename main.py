@@ -115,7 +115,9 @@ if 'current_page' not in st.session_state:
 options = st.sidebar.radio('Pages', options=['Home', 'Analysis', 'Data Statistics', 'Upload', 'Draft'], key='current_page')
 
 if st.sidebar.button("Clear and reload"):
-    st.experimental_rerun()
+    # Clear values from *all* all in-memory and on-disk data caches:
+    # i.e. clear values from both square and cube
+    st.cache_data.clear()
 
 if options == 'Analysis':
     # Possible data to show
@@ -791,12 +793,16 @@ elif options == 'Upload':
                 uploaded_csv_file_1 = None
                 uploaded_csv_file_2 = None
                 st.session_state.file_uploader_key += 1
-                st.experimental_rerun()
+                # Clear values from *all* all in-memory and on-disk data caches:
+                # i.e. clear values from both square and cube
+                st.cache_data.clear()
         if st.button("Clear and reload", key=1):
             uploaded_csv_file_1 = None
             uploaded_csv_file_2 = None
             st.session_state.file_uploader_key += 1
-            st.experimental_rerun()
+            # Clear values from *all* all in-memory and on-disk data caches:
+            # i.e. clear values from both square and cube
+            st.cache_data.clear()
 
 
 
