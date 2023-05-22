@@ -793,6 +793,7 @@ elif options == 'Upload':
                 uploaded_csv_file_1 = None
                 uploaded_csv_file_2 = None
                 st.session_state.file_uploader_key += 1
+                st.experimental_rerun()
                 # Clear values from *all* all in-memory and on-disk data caches:
                 # i.e. clear values from both square and cube
                 st.cache_data.clear()
@@ -802,6 +803,7 @@ elif options == 'Upload':
             st.session_state.file_uploader_key += 1
             # Clear values from *all* all in-memory and on-disk data caches:
             # i.e. clear values from both square and cube
+            st.experimental_rerun()
             st.cache_data.clear()
 
 
