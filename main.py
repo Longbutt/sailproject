@@ -813,9 +813,10 @@ elif options == 'Draft':
         return result
 
 
-    # Clear the cache
-    if st.button('Clear Cache'):
-        my_cached_function.clear_cache()
+    if st.button("Clear All"):
+        # Clear values from *all* all in-memory and on-disk data caches:
+        # i.e. clear values from both square and cube
+        st.cache_data.clear()
 
     # Use the cached function
     result = my_cached_function()
