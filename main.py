@@ -112,7 +112,7 @@ if 'current_page' not in st.session_state:
 
 # Set up the sidebar radio button using the session state variable
 # options = st.sidebar.radio('Pages', options=['Home', 'Analysis', 'Data Statistics', 'Upload', 'Draft'], key='current_page')
-options = st.sidebar.radio('Pages', options=['Home', 'Analysis', 'Data Statistics', 'Upload', 'Draft'], key='current_page')
+options = st.sidebar.radio('Pages', options=['Home', 'Analysis', 'Upload'], key='current_page')
 
 if st.sidebar.button("Clear and reload"):
     # Clear values from *all* all in-memory and on-disk data caches:
