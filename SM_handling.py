@@ -778,7 +778,7 @@ def make_RO_and_Prep_SM(SM, Session_id):
     run_overview['Type'] = run_overview['avg_TWA'].apply(lambda x: 'Upwind' if abs(x) < 90 else 'Downwind')
     run_overview['session_id'] = Session_id
 
-    SM = SM.rename(columns={'HDT - Heading True': 'Yaw'})
+    SM = SM.rename(columns={'HDT - Heading True': 'Heading'})
     SM = SM.rename(columns={'Heel': 'Roll'})
     SM = SM.rename(columns={'Trim Fore / Aft': 'Pitch'})
     SM = SM.rename(columns={'SOG - Speed over Ground': 'SOG'})
