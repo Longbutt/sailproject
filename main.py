@@ -803,33 +803,25 @@ elif options == 'Upload':
 
 
 elif options == 'Draft':
-    # Function to update the 'options' variable
-    def my_function():
-        st.session_state.current_page = 'Home'
+    @st.cache
+    def my_cached_function():
+        # This function will be cached
+
+        result = 2
+
+        # Return the result
+        return result
 
 
-    # Create the button
-    if st.button("Click me!"):
-        my_function()
-        st.experimental_rerun()
+    # Clear the cache
+    if st.button('Clear Cache'):
+        my_cached_function.clear_cache()
 
-    options = ['Option 1', 'Option 2', 'Option 3']
+    # Use the cached function
+    result = my_cached_function()
 
-    selected_options = []
-
-    for option in options:
-        if st.checkbox(option):
-            selected_options.append(option)
-
-    st.write(f"You have selected: {selected_options}")
-
-    import streamlit as st
-
-    options = ['Option 1', 'Option 2', 'Option 3']
-
-    smoothing = st.select_slider('Smoothing:', options=options)
-
-    st.write(f"You have selected: {selected_options}")
+    # Display the result
+    st.write(result)
 
 # Remove the firewall rule after your script is done
 # sql_client.firewall_rules.delete(resource_group_name, server_name, firewall_rule_name)
