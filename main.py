@@ -803,7 +803,7 @@ elif options == 'Upload':
 
 
 elif options == 'Draft':
-    @st.cache
+    @st.cache_data
     def my_cached_function():
         # This function will be cached
 
