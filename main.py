@@ -818,8 +818,10 @@ elif options == 'Draft':
         # i.e. clear values from both square and cube
         st.cache_data.clear()
 
-    # Use the cached function
-    result = my_cached_function()
+    if st.button("Run test"):
+        # Clear values from *all* all in-memory and on-disk data caches:
+        # i.e. clear values from both square and cube
+        result = my_cached_function()
 
     # Display the result
     st.write(result)
